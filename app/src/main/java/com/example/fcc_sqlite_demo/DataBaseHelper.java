@@ -37,50 +37,43 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean addOne(CustomerModel customerModel) {
-
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_CUSTOMER_ID, customerModel.getId());
-        contentValues.put(COLUMN_CUSTOMER_NAME, customerModel.getName());
-        contentValues.put(COLUMN_CUSTOMER_BIRTHYEAR, customerModel.getBirthYear());
 
         // No need because ID is auto-increment in DB.
-        // contentValues.put(COLUMN_CUSTOMER_ACTIVE, customerModel.isActive());
+        // contentValues.put(COLUMN_CUSTOMER_ID, customerModel.getId());
 
+        contentValues.put(COLUMN_CUSTOMER_NAME, customerModel.getName());
+        contentValues.put(COLUMN_CUSTOMER_BIRTHYEAR, customerModel.getBirthYear());
+        contentValues.put(COLUMN_CUSTOMER_ACTIVE, customerModel.isActive());
         long insert = sqLiteDatabase.insert(CUSTOMER_TABLE, null, contentValues);
         System.out.println(insert);
-
-        return true;
+        if(insert == -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public List<CustomerModel> getAll() {
         List<CustomerModel> returnList = new ArrayList<>();
-
         String queryString = "SELECT * FROM " + CUSTOMER_TABLE;
-
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-
         Cursor cursor = sqLiteDatabase.rawQuery(queryString,null);
-
         if(cursor.moveToFirst()) {
             do {
                 int customerID = cursor.getInt(0);
                 String customerName = cursor.getString(1);
                 int customerBirthYear = cursor.getInt(2);
                 boolean customerIsActive = cursor.getInt(3) == 1 ? true: false;
-
                 CustomerModel customerModel = new CustomerModel(customerID, customerName, customerBirthYear, customerIsActive);
                 returnList.add(customerModel);
-
             } while (cursor.moveToNext());
-
         } else {
             System.out.println("fail");
         }
-
         cursor.close();
         sqLiteDatabase.close();
         return returnList;
-
     }
 }
