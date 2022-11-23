@@ -2,10 +2,14 @@ package com.example.fcc_sqlite_demo;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -47,5 +51,36 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         System.out.println(insert);
 
         return true;
+    }
+
+    public List<CustomerModel> getAll() {
+        List<CustomerModel> returnList = new ArrayList<>();
+
+        String queryString = "SELECT * FROM " + CUSTOMER_TABLE;
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString,null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                int customerID = cursor.getInt(0);
+                String customerName = cursor.getString(1);
+                int customerBirthYear = cursor.getInt(2);
+                boolean customerIsActive = cursor.getInt(3) == 1 ? true: false;
+
+                CustomerModel customerModel = new CustomerModel(customerID, customerName, customerBirthYear, customerIsActive);
+                returnList.add(customerModel);
+
+            } while (cursor.moveToNext());
+
+        } else {
+            System.out.println("fail");
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+        return returnList;
+
     }
 }

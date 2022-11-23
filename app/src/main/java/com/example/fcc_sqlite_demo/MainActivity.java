@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     Button buttonAdd;
@@ -52,11 +54,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         buttonViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "View All button", Toast.LENGTH_SHORT).show();
             }
+        });
+        */
+        buttonViewAll.setOnClickListener(view -> {
+            DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
+
+            List<CustomerModel> all = dataBaseHelper.getAll();
+
+            Toast.makeText(MainActivity.this, all.toString(), Toast.LENGTH_SHORT).show();
         });
     }
 
