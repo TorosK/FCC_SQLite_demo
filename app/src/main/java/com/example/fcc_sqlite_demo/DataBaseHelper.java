@@ -76,4 +76,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
         return returnList;
     }
+
+    public boolean deleteOne(CustomerModel customerModel) {
+        // return false;
+    }
 }

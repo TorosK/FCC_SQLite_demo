@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextBirthYear;
     Switch switchViewActiveCustomer;
     ListView listViewCustomerList;
+    ArrayAdapter customerArrayAdapter;
+    DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         editTextBirthYear = findViewById(R.id.editText_birthYear);
         switchViewActiveCustomer = findViewById(R.id.switch_activeCustomer);
         listViewCustomerList = findViewById(R.id.listView_customerList);
+
+        dataBaseHelper = new DataBaseHelper(MainActivity.this);
+
+        showCustomersOnListView(dataBaseHelper);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
                 boolean success = dataBaseHelper.addOne(customerModel);
                 Toast.makeText(MainActivity.this, "success: " + success, Toast.LENGTH_SHORT).show();
+                showCustomersOnListView(dataBaseHelper);
 
             }
         });
@@ -64,18 +71,18 @@ public class MainActivity extends AppCompatActivity {
         });
         */
         buttonViewAll.setOnClickListener(view -> {
-            DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
+            dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
-            List<CustomerModel> all = dataBaseHelper.getAll();
+            showCustomersOnListView(dataBaseHelper);
 
-            ArrayAdapter customerArrayAdapter = new ArrayAdapter<CustomerModel>(MainActivity.this, android.R.layout.simple_list_item_1, all);
-            listViewCustomerList.setAdapter(customerArrayAdapter);
-
-            Toast.makeText(MainActivity.this, all.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, dataBaseHelper.getAll().toString(), Toast.LENGTH_SHORT).show();
         });
     }
 
-
+    private void showCustomersOnListView(DataBaseHelper dataBaseHelper) {
+        customerArrayAdapter = new ArrayAdapter<CustomerModel>(MainActivity.this, android.R.layout.simple_list_item_1, dataBaseHelper.getAll());
+        listViewCustomerList.setAdapter(customerArrayAdapter);
+    }
 
 
 }
