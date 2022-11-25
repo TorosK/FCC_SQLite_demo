@@ -2,6 +2,8 @@ package com.example.fcc_sqlite_demo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -77,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, dataBaseHelper.getAll().toString(), Toast.LENGTH_SHORT).show();
         });
 
+        /*
+        // DELETE ON CLICK
         listViewReminderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -85,6 +89,35 @@ public class MainActivity extends AppCompatActivity {
                 showRemindersOnListView(dataBaseHelper);
                 Toast.makeText(MainActivity.this, "DELETED " + clickedReminder.toString(), Toast.LENGTH_SHORT).show();
 
+            }
+        });
+        */
+
+        // ERROR! last added item gets deleted instead of the selected item.
+        listViewReminderList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                new AlertDialog.Builder(MainActivity.this).
+                        setTitle("Vill du radera denna påminnelse?").
+                        setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ReminderModel clickedReminder = (ReminderModel) adapterView.getItemAtPosition(position);
+                                dataBaseHelper.deleteOne(clickedReminder);
+                                showRemindersOnListView(dataBaseHelper);
+                                reminderArrayAdapter.notifyDataSetChanged();
+
+                                // Below caused error
+                                // Toast.makeText(MainActivity.this, "DELETED " + clickedReminder.toString(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        }).setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).create().show();
+                return false;
             }
         });
     }
