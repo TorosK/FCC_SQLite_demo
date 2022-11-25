@@ -7,67 +7,67 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/editText_customerName"
+        android:id="@+id/editText_reminderTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="@string/CustomerName"
+        android:hint="@string/Title"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/editText_birthYear"
+        app:layout_constraintBottom_toTopOf="@+id/editText_reminderDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_birthYear"
+        android:id="@+id/editText_reminderDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="@string/BirthYear"
+        android:hint="@string/Date"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/switch_activeCustomer"
+        app:layout_constraintBottom_toTopOf="@+id/switch_reminder_Is_Important"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_customerName" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_reminderTitle" />
 
     <Switch
-        android:id="@+id/switch_activeCustomer"
+        android:id="@+id/switch_reminder_Is_Important"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/ActiveCustomer"
+        android:text="@string/Important"
         app:layout_constraintBottom_toTopOf="@+id/button_viewAll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_birthYear" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_reminderDate" />
 
     <Button
         android:id="@+id/button_viewAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/buttonViewAll"
-        app:layout_constraintBottom_toTopOf="@+id/listView_customerList"
+        app:layout_constraintBottom_toTopOf="@+id/listView_reminder_List"
         app:layout_constraintEnd_toStartOf="@+id/buttonAdd"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch_activeCustomer" />
+        app:layout_constraintTop_toBottomOf="@+id/switch_reminder_Is_Important" />
 
     <Button
         android:id="@+id/buttonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/buttonAdd"
-        app:layout_constraintBottom_toTopOf="@+id/listView_customerList"
+        app:layout_constraintBottom_toTopOf="@+id/listView_reminder_List"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button_viewAll"
         app:layout_constraintTop_toTopOf="@+id/button_viewAll" />
 
     <ListView
-        android:id="@+id/listView_customerList"
+        android:id="@+id/listView_reminder_List"
         android:layout_width="409dp"
         android:layout_height="532dp"
         app:layout_constraintEnd_toEndOf="parent"

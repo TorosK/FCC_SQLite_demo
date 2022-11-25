@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">FCC_SQLite_demo</string>
-    <string name="CustomerName">Customer Name</string>
-    <string name="BirthYear">Birth Year</string>
-    <string name="ActiveCustomer">Active Customer</string>
-    <string name="buttonViewAll">View All</string>
-    <string name="buttonAdd">Add</string>
+    <string name="app_name">Påminnelser</string>
+    <string name="Title">Titel</string>
+    <string name="Date">Datum</string>
+    <string name="Important">Viktigt</string>
+    <string name="buttonViewAll">Visa alla</string>
+    <string name="buttonAdd">Lägg Till</string>
 </resources>

@@ -13,20 +13,19 @@ import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-    public static final String CUSTOMER_TABLE = "CUSTOMER_TABLE";
-    public static final String COLUMN_CUSTOMER_ID = "ID";
-    public static final String COLUMN_CUSTOMER_NAME = "NAME";
-    public static final String COLUMN_CUSTOMER_BIRTHYEAR = "BIRTHYEAR";
-    public static final String COLUMN_CUSTOMER_ACTIVE = "ACTIVE";
-
+    public static final String REMINDER_TABLE = "REMINDER_TABLE";
+    public static final String REMINDER_COLUMN_ID = "ID";
+    public static final String REMINDER_COLUMN_TITLE = "TITLE";
+    public static final String REMINDER_COLUMN_DATE = "DATE";
+    public static final String REMINDER_COLUMN_IS_IMPORTANT = "IS_IMPORTANT";
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "customer.db", null, 1);
+        super(context, "reminder.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String createTableStatement = "CREATE TABLE " + CUSTOMER_TABLE + " (" + COLUMN_CUSTOMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_CUSTOMER_NAME + " TEXT, " + COLUMN_CUSTOMER_BIRTHYEAR + " INT, " + COLUMN_CUSTOMER_ACTIVE + " BOOL)";
+        String createTableStatement = "CREATE TABLE " + REMINDER_TABLE + " (" + REMINDER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + REMINDER_COLUMN_TITLE + " TEXT, " + REMINDER_COLUMN_DATE + " INT, " + REMINDER_COLUMN_IS_IMPORTANT + " BOOL)";
 
         sqLiteDatabase.execSQL(createTableStatement);
     }
@@ -36,17 +35,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean addOne(CustomerModel customerModel) {
+    public boolean addOne(ReminderModel reminderModel) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
 
         // No need because ID is auto-increment in DB.
         // contentValues.put(COLUMN_CUSTOMER_ID, customerModel.getId());
 
-        contentValues.put(COLUMN_CUSTOMER_NAME, customerModel.getName());
-        contentValues.put(COLUMN_CUSTOMER_BIRTHYEAR, customerModel.getBirthYear());
-        contentValues.put(COLUMN_CUSTOMER_ACTIVE, customerModel.isActive());
-        long insert = sqLiteDatabase.insert(CUSTOMER_TABLE, null, contentValues);
+        contentValues.put(REMINDER_COLUMN_TITLE, reminderModel.getTitle());
+        contentValues.put(REMINDER_COLUMN_DATE, reminderModel.getDate());
+        contentValues.put(REMINDER_COLUMN_IS_IMPORTANT, reminderModel.isImportant());
+        long insert = sqLiteDatabase.insert(REMINDER_TABLE, null, contentValues);
         System.out.println(insert);
         if(insert == -1) {
             return false;
@@ -55,19 +54,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<CustomerModel> getAll() {
-        List<CustomerModel> returnList = new ArrayList<>();
-        String queryString = "SELECT * FROM " + CUSTOMER_TABLE;
+    public List<ReminderModel> getAll() {
+        List<ReminderModel> returnList = new ArrayList<>();
+        String queryString = "SELECT * FROM " + REMINDER_TABLE;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(queryString,null);
         if(cursor.moveToFirst()) {
             do {
-                int customerID = cursor.getInt(0);
-                String customerName = cursor.getString(1);
-                int customerBirthYear = cursor.getInt(2);
-                boolean customerIsActive = cursor.getInt(3) == 1 ? true: false;
-                CustomerModel customerModel = new CustomerModel(customerID, customerName, customerBirthYear, customerIsActive);
-                returnList.add(customerModel);
+                int reminder_ID = cursor.getInt(0);
+                String reminder_title = cursor.getString(1);
+                int reminder_date = cursor.getInt(2);
+                boolean reminder_is_important = cursor.getInt(3) == 1 ? true: false;
+                ReminderModel reminderModel = new ReminderModel(reminder_ID, reminder_title, reminder_date, reminder_is_important);
+                returnList.add(reminderModel);
             } while (cursor.moveToNext());
         } else {
             System.out.println("fail");
@@ -77,7 +76,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-    public boolean deleteOne(CustomerModel customerModel) {
+    public boolean deleteOne(ReminderModel reminderModel) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + REMINDER_TABLE + " WHERE " + REMINDER_COLUMN_ID + " = " + ReminderModel.getId();
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+        if (cursor.moveToFirst()) {
+            return true;
+        } else {
+            return false;
+        }
         // return false;
     }
 }
