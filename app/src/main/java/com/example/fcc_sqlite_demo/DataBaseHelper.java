@@ -102,7 +102,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(REMINDER_COLUMN_IS_IMPORTANT, important);
 
         // on below line we are calling a update method to update our database and passing our values.
-        // and we are comparing it with name of our course which is stored in original name variable.
+        // and we are comparing it with title of our reminder which is stored in original title variable. // But why compare?
         sqLiteDatabase.update(REMINDER_TABLE, values, "TITLE=?", new String[]{originalTitle});
         sqLiteDatabase.close();
     }
