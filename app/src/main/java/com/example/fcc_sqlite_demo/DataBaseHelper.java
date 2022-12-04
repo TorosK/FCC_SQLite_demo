@@ -89,4 +89,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     // Update method
+    public void updateReminder(String originalTitle, String title, int date, boolean important) { // do we also need reminderID ??
+
+        // calling a method to get writable database.
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        // on below line we are passing all values
+        // along with its key and value pair.
+        values.put(REMINDER_COLUMN_TITLE, title);
+        values.put(REMINDER_COLUMN_DATE, date);
+        values.put(REMINDER_COLUMN_IS_IMPORTANT, important);
+
+        // on below line we are calling a update method to update our database and passing our values.
+        // and we are comparing it with name of our course which is stored in original name variable.
+        sqLiteDatabase.update(REMINDER_TABLE, values, "TITLE=?", new String[]{originalTitle});
+        sqLiteDatabase.close();
+    }
 }
