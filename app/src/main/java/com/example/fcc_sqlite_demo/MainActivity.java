@@ -48,16 +48,16 @@ public class MainActivity extends AppCompatActivity {
                 ReminderModel reminderModel;
                 try{
                     reminderModel = new ReminderModel(-1, editTextTitle.getText().toString(), Integer.parseInt(editTextDate.getText().toString()), switchViewReminderIsImportant.isChecked());
-                    Toast.makeText(MainActivity.this, reminderModel.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, reminderModel.toString(), Toast.LENGTH_LONG).show();
                 } catch (Exception e){
                     reminderModel = new ReminderModel(-1, "error", 0, false);
-                    Toast.makeText(MainActivity.this, "Error: Wrong input", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Error: Wrong input", Toast.LENGTH_LONG).show();
                 }
 
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
                 boolean success = dataBaseHelper.addOne(reminderModel);
-                Toast.makeText(MainActivity.this, "success: " + success, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "success: " + success, Toast.LENGTH_LONG).show();
                 showRemindersOnListView(dataBaseHelper);
 
             }
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
             showRemindersOnListView(dataBaseHelper);
 
-            Toast.makeText(MainActivity.this, dataBaseHelper.getAll().toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, dataBaseHelper.getAll().toString(), Toast.LENGTH_LONG).show();
         });
 
         /*

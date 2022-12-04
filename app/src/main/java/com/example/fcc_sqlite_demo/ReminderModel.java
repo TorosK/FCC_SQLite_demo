@@ -1,7 +1,7 @@
 package com.example.fcc_sqlite_demo;
 
 public class ReminderModel {
-    private static int id;
+    private int id;
     private String title;
     private int date;
     private boolean isImportant;
@@ -16,7 +16,7 @@ public class ReminderModel {
     public ReminderModel() {
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 

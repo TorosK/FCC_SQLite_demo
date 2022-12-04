@@ -78,7 +78,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public boolean deleteOne(ReminderModel reminderModel) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + REMINDER_TABLE + " WHERE " + REMINDER_COLUMN_ID + " = " + ReminderModel.getId();
+        String queryString = "DELETE FROM " + REMINDER_TABLE + " WHERE " + REMINDER_COLUMN_ID + " = " + reminderModel.getId();
         Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
         if (cursor.moveToFirst()) {
             return true;
@@ -87,4 +87,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         // return false;
     }
+
+    // Update method
 }

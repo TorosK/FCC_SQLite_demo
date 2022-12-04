@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Påminnelser</string>
+    <string name="app_name">Påminnelser SQLite</string>
     <string name="Title">Titel</string>
     <string name="Date">Datum</string>
     <string name="Important">Viktigt</string>
