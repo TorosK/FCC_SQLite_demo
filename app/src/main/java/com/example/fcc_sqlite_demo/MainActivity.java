@@ -98,10 +98,32 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
                 new AlertDialog.Builder(MainActivity.this).
-                        setTitle("Vill du radera denna påminnelse?").
-                        setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                        setTitle("Vad vill du göra?").
+
+                        // Edit option
+                        setNeutralButton("Ändra", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+
+                                // New Fragment
+                                // Pre-populate three input fields
+                                // Save Button underneath
+                            }
+                        }).
+
+                        // Abort
+                        setPositiveButton("Avbryt", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).
+
+                        // Delete the long-pressed reminder
+                        setNegativeButton("Radera", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
                                 ReminderModel clickedReminder = (ReminderModel) adapterView.getItemAtPosition(position);
                                 dataBaseHelper.deleteOne(clickedReminder);
                                 showRemindersOnListView(dataBaseHelper);
@@ -109,12 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
                                 // Below caused error
                                 // Toast.makeText(MainActivity.this, "DELETED " + clickedReminder.toString(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        }).setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
                             }
                         }).create().show();
                 return false;
