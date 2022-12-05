@@ -12,43 +12,80 @@
 </androidx.constraintlayout.widget.ConstraintLayout>
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".UpdateReminderActivity">
 
     <!--Edit text to enter title-->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Edit"
+        app:layout_constraintBottom_toTopOf="@+id/idEdtReminderTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/idEdtReminderTitle"
-        android:layout_width="match_parent"
+
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="Titel" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+
+        android:ems="10"
+        android:hint="@string/Title"
+        android:inputType="textPersonName"
+
+        android:minHeight="48dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/idEdtReminderDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--edit text to enter date-->
     <EditText
         android:id="@+id/idEdtReminderDate"
-        android:layout_width="match_parent"
+
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="Datum" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+
+        android:ems="10"
+        android:hint="@string/Date"
+        android:inputType="number"
+        android:minHeight="48dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/switch_reminder_Is_Important"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idEdtReminderTitle" />
 
     <!--edit switch to toggle importance-->
     <Switch
         android:id="@+id/switch_reminder_Is_Important"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/Important"/>
-        <!--
-        app:layout_constraintBottom_toTopOf="@+id/button_viewAll"
+
+        android:minHeight="48dp"
+        android:text="@string/Important"
+        android:textAllCaps="false"
+
+        app:layout_constraintBottom_toTopOf="@+id/idBtnUpdateReminder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_reminderDate"
-        -->
+        app:layout_constraintTop_toBottomOf="@+id/idEdtReminderDate" />
+
 
 
     <!--edit text for course description-->
@@ -64,10 +101,16 @@
     <!--button for updating our course-->
     <Button
         android:id="@+id/idBtnUpdateReminder"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Klar"
-        android:textAllCaps="false" />
 
-</LinearLayout>
+        android:text="@string/Done"
+        android:textAllCaps="false"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_reminder_Is_Important" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

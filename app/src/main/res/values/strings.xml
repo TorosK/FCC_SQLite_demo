@@ -5,4 +5,6 @@
     <string name="Important">Viktigt</string>
     <string name="buttonViewAll">Visa alla</string>
     <string name="buttonAdd">Lägg Till</string>
+    <string name="Done">Klar</string>
+    <string name="Edit">Ändra</string>
 </resources>
