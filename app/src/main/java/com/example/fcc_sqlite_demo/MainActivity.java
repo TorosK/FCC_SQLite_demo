@@ -1,5 +1,6 @@
 package com.example.fcc_sqlite_demo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter reminderArrayAdapter;
     DataBaseHelper dataBaseHelper;
     private Context context;
+    private ArrayList<CourseModal> courseModalArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +115,15 @@ public class MainActivity extends AppCompatActivity {
                                 // Pre-populate three input fields
                                 // Save Button underneath
 
+                                // @Override
+                                // public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+                                    // on below line we are setting data
+                                    // to our views of recycler view item.
+                                    CourseModal modal = courseModalArrayList.get(position);
+                                    holder.courseNameTV.setText(modal.getCourseName());
+                                    holder.courseDescTV.setText(modal.getCourseDescription());
+                                    holder.courseDurationTV.setText(modal.getCourseDuration());
+                                    holder.courseTracksTV.setText(modal.getCourseTracks());
 
                                 // below line is to add on click listener for our recycler view item.
                                 // holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -132,10 +143,6 @@ public class MainActivity extends AppCompatActivity {
                                 context.startActivity(i);
                             // }
                         // });
-
-
-                //
-
             }
         }).
 
