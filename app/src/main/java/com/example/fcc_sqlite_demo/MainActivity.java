@@ -1,10 +1,8 @@
 package com.example.fcc_sqlite_demo;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     Button buttonAdd;
-    Button buttonViewAll;
+    Button buttonScan;
     EditText editTextTitle;
     EditText editTextDate;
     Switch switchViewReminderIsImportant;
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         buttonAdd = findViewById(R.id.buttonAdd);
-        buttonViewAll = findViewById(R.id.button_viewAll);
+        buttonScan = findViewById(R.id.button_viewAll);
         editTextTitle = findViewById(R.id.editText_reminderTitle);
         editTextDate = findViewById(R.id.editText_reminderDate);
         switchViewReminderIsImportant = findViewById(R.id.switch_reminder_Is_Important);
@@ -80,12 +78,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
-        buttonViewAll.setOnClickListener(view -> {
+        buttonScan.setOnClickListener(view -> {
+            /* Previous functionality to View All
             dataBaseHelper = new DataBaseHelper(MainActivity.this);
-
             showRemindersOnListView(dataBaseHelper);
-
             Toast.makeText(MainActivity.this, dataBaseHelper.getAll().toString(), Toast.LENGTH_LONG).show();
+            */
+
+            // When button is pressed, switch over to new fragment / activity for camera
+            // Allow scanning of barcodes, QR-codes with camera
+            // Save values from barcode / QR codes
+            // Show it in a TOAST message / system.out
+            // Populate title input field with value
         });
 
         /*
