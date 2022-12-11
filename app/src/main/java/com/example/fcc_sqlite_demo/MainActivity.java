@@ -18,6 +18,8 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     Button buttonAdd;
@@ -29,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter reminderArrayAdapter;
     DataBaseHelper dataBaseHelper;
     private Context context;
-    private ArrayList<CourseModal> courseModalArrayList;
+
+    private ArrayList<ReminderModel> reminderModelArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 ReminderModel reminderModel;
                 try {
                     reminderModel = new ReminderModel(-1, editTextTitle.getText().toString(), Integer.parseInt(editTextDate.getText().toString()), switchViewReminderIsImportant.isChecked());
-                    Toast.makeText(MainActivity.this, reminderModel.toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Ny påminnelse: " + reminderModel.toString(), Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     reminderModel = new ReminderModel(-1, "error", 0, false);
                     Toast.makeText(MainActivity.this, "Error: Wrong input", Toast.LENGTH_LONG).show();
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
                 boolean success = dataBaseHelper.addOne(reminderModel);
-                Toast.makeText(MainActivity.this, "success: " + success, Toast.LENGTH_LONG).show();
+                // Toast.makeText(MainActivity.this, "success: " + success, Toast.LENGTH_LONG).show();
                 showRemindersOnListView(dataBaseHelper);
 
             }
@@ -117,64 +120,66 @@ public class MainActivity extends AppCompatActivity {
 
                                 // @Override
                                 // public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-                                    // on below line we are setting data
-                                    // to our views of recycler view item.
-                                    CourseModal modal = courseModalArrayList.get(position);
-                                    holder.courseNameTV.setText(modal.getCourseName());
-                                    holder.courseDescTV.setText(modal.getCourseDescription());
-                                    holder.courseDurationTV.setText(modal.getCourseDuration());
-                                    holder.courseTracksTV.setText(modal.getCourseTracks());
+                                // on below line we are setting data
+                                // to our views of recycler view item.
+
+                                // ReminderModel reminderModel = reminderModelArrayList.get(i);
+                                // holder.courseNameTV.setText(modal.getCourseName());
+                                // holder.courseDescTV.setText(modal.getCourseDescription());
+                                // holder.courseDurationTV.setText(modal.getCourseDuration());
+                                // holder.courseTracksTV.setText(modal.getCourseTracks());
+
 
                                 // below line is to add on click listener for our recycler view item.
                                 // holder.itemView.setOnClickListener(new View.OnClickListener() {
                                 // @Override
                                 // public void onClick(View v) {
 
+                                ReminderModel clickedReminder = (ReminderModel) adapterView.getItemAtPosition(position);
+
                                 // on below line we are calling an intent.
-                                Intent intent = new Intent(context, UpdateReminderActivity.class);
-
+                                Intent intent = new Intent(MainActivity.this, UpdateReminderActivity.class);
                                 // below we are passing all our values.
-                                intent.putExtra("name", modal.getCourseName());
-                                intent.putExtra("description", modal.getCourseDescription());
-                                intent.putExtra("duration", modal.getCourseDuration());
-                                intent.putExtra("tracks", modal.getCourseTracks());
-
+                                intent.putExtra("ID", clickedReminder.getId());
+                                intent.putExtra("Title", clickedReminder.getTitle());
+                                intent.putExtra("Date", clickedReminder.getDate());
+                                intent.putExtra("Important", clickedReminder.isImportant());
                                 // starting our activity.
-                                context.startActivity(i);
-                            // }
-                        // });
+                                startActivity(intent);
+                                // }
+                                // });
+                            }
+                        }).
+
+                        // Abort
+                                setPositiveButton("Avbryt", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).
+
+                        // Delete the long-pressed reminder
+                                setNegativeButton("Radera", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                ReminderModel clickedReminder = (ReminderModel) adapterView.getItemAtPosition(position);
+                                dataBaseHelper.deleteOne(clickedReminder);
+                                showRemindersOnListView(dataBaseHelper);
+                                reminderArrayAdapter.notifyDataSetChanged();
+
+                                // Below caused error
+                                // Toast.makeText(MainActivity.this, "DELETED " + clickedReminder.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }).create().show();
+                return false;
             }
-        }).
-
-                // Abort
-                        setPositiveButton("Avbryt", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }).
-
-                // Delete the long-pressed reminder
-                        setNegativeButton("Radera", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        ReminderModel clickedReminder = (ReminderModel) adapterView.getItemAtPosition(position);
-                        dataBaseHelper.deleteOne(clickedReminder);
-                        showRemindersOnListView(dataBaseHelper);
-                        reminderArrayAdapter.notifyDataSetChanged();
-
-                        // Below caused error
-                        // Toast.makeText(MainActivity.this, "DELETED " + clickedReminder.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }).create().show();
-        return false;
+        });
     }
-});
-        }
 
-private void showRemindersOnListView(DataBaseHelper dataBaseHelper){
-        reminderArrayAdapter=new ArrayAdapter<ReminderModel>(MainActivity.this,android.R.layout.simple_list_item_1,dataBaseHelper.getAll());
+    private void showRemindersOnListView(DataBaseHelper dataBaseHelper) {
+        reminderArrayAdapter = new ArrayAdapter<ReminderModel>(MainActivity.this, android.R.layout.simple_list_item_1, dataBaseHelper.getAll());
         listViewReminderList.setAdapter(reminderArrayAdapter);
-        }
-        }
+    }
+}
