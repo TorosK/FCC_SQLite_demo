@@ -10,6 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+
+        // ZXING
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "FCC_SQLite_demo"

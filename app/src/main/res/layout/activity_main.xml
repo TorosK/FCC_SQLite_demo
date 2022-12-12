@@ -55,13 +55,13 @@
         android:text="@string/Important"
         android:textAllCaps="false"
 
-        app:layout_constraintBottom_toTopOf="@+id/button_viewAll"
+        app:layout_constraintBottom_toTopOf="@+id/buttonScan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_reminderDate" />
 
     <Button
-        android:id="@+id/button_viewAll"
+        android:id="@+id/buttonScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/buttonViewAll"
@@ -81,7 +81,7 @@
 
         app:layout_constraintBottom_toTopOf="@+id/listView_reminder_List"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/button_viewAll"
+        app:layout_constraintStart_toEndOf="@id/buttonScan"
         app:layout_constraintTop_toBottomOf="@+id/switch_reminder_Is_Important"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -92,6 +92,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_viewAll" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonScan" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

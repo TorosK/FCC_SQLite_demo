@@ -1,9 +1,9 @@
 package com.example.fcc_sqlite_demo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,10 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.budiyev.android.codescanner.CodeScanner;
+import com.budiyev.android.codescanner.CodeScannerView;
+import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.zxing.Result;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
     ListView listViewReminderList;
     ArrayAdapter reminderArrayAdapter;
     DataBaseHelper dataBaseHelper;
-    private Context context;
-
-    private ArrayList<ReminderModel> reminderModelArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         buttonAdd = findViewById(R.id.buttonAdd);
-        buttonScan = findViewById(R.id.button_viewAll);
+        buttonScan = findViewById(R.id.buttonScan);
         editTextTitle = findViewById(R.id.editText_reminderTitle);
         editTextDate = findViewById(R.id.editText_reminderDate);
         switchViewReminderIsImportant = findViewById(R.id.switch_reminder_Is_Important);
@@ -90,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
             // Save values from barcode / QR codes
             // Show it in a TOAST message / system.out
             // Populate title input field with value
+
+            // Switch to ZXing activity
+            // on below line we are calling an intent.
+            Intent intent = new Intent(MainActivity.this, ZXingActivity.class);
+            // starting our activity.
+            startActivity(intent);
         });
 
         /*
