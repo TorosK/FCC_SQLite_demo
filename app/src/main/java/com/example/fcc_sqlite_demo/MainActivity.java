@@ -1,9 +1,8 @@
 package com.example.fcc_sqlite_demo;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,15 +10,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
-
-import com.budiyev.android.codescanner.CodeScanner;
-import com.budiyev.android.codescanner.CodeScannerView;
-import com.budiyev.android.codescanner.DecodeCallback;
-import com.google.zxing.Result;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Button buttonScan;
 
     EditText editTextTitle;
+    private EditText editTextDate;
     EditText editTextLevel;
     EditText editTextScannedCode;
 
@@ -48,9 +45,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // on below line we are initializing our variables.
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonScan = findViewById(R.id.buttonScan);
         editTextTitle = findViewById(R.id.editText_reminderTitle);
+        editTextDate = findViewById(R.id.editText_reminderDate);
         editTextLevel = findViewById(R.id.editText_reminderLevel);
         editTextScannedCode = findViewById(R.id.editText_reminderScannedCode);
         switchViewReminderIsImportant = findViewById(R.id.switch_reminder_Is_Important);
@@ -75,6 +74,43 @@ public class MainActivity extends AppCompatActivity {
         switchViewReminderIsImportant.setChecked(reminderImportant);
 
         showRemindersOnListView(dataBaseHelper);
+
+        // on below line we are adding click listener
+        // for our pick date button
+        editTextDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // on below line we are getting
+                // the instance of our calendar.
+                final Calendar c = Calendar.getInstance();
+
+                // on below line we are getting
+                // our day, month and year.
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                // on below line we are creating a variable for date picker dialog.
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        // on below line we are passing context.
+                        MainActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // on below line we are setting date to our edit text.
+                                editTextDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        },
+                        // on below line we are passing year,
+                        // month and day for selected date in our date picker.
+                        year, month, day);
+                // at last we are calling show to
+                // display our date picker dialog.
+                datePickerDialog.show();
+            }
+        });
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
