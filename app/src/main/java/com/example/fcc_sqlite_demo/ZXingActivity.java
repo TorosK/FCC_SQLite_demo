@@ -38,7 +38,7 @@ public class ZXingActivity extends AppCompatActivity {
                         Toast.makeText(ZXingActivity.this, result.getText(), Toast.LENGTH_LONG).show();
 
                         reminderTitle = getIntent().getStringExtra("Title_Scan_Code");
-                        reminderLevel = getIntent().getIntExtra("Level_Scan_Code", 0);
+                        reminderLevel = getIntent().getIntExtra("Level_Scan_Code", -999);
                         reminderImportance = getIntent().getBooleanExtra("Important_Scan_Code", false);
 
                         // Toast.makeText(ZXingActivity.this, "titel: " + reminderTitle + " | våning: " + reminderLevel + " | viktigt: " + reminderImportance, Toast.LENGTH_LONG).show();

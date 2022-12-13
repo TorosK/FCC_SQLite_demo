@@ -16,7 +16,7 @@ public class UpdateReminderActivity extends AppCompatActivity {
     private EditText reminderTitleEdit;
     private EditText reminderLevelEdit;
     private EditText reminderScannedCodeEdit;
-    private Switch reminderImportanceEdit;
+    private Switch reminderImportanceSwitch;
     private Button updateReminderButton;
     private DataBaseHelper dataBaseHelper;
     int reminderID;
@@ -34,7 +34,7 @@ public class UpdateReminderActivity extends AppCompatActivity {
         reminderTitleEdit = findViewById(R.id.idEdtReminderTitle);
         reminderLevelEdit = findViewById(R.id.idEdtReminderLevel);
         reminderScannedCodeEdit = findViewById(R.id.idEdtReminderScannedCode);
-        reminderImportanceEdit = findViewById(R.id.switch_reminder_Is_Important);
+        reminderImportanceSwitch = findViewById(R.id.switch_reminder_Is_Important);
         updateReminderButton = findViewById(R.id.idBtnUpdateReminder);
 
         // on below line we are initialing our dbhandler class.
@@ -53,7 +53,7 @@ public class UpdateReminderActivity extends AppCompatActivity {
         reminderTitleEdit.setText(reminderTitle);
         reminderLevelEdit.setText(Integer.toString(reminderLevel));
         reminderScannedCodeEdit.setText(reminderScannedCode);
-        reminderImportanceEdit.setChecked(reminderImportance);
+        reminderImportanceSwitch.setChecked(reminderImportance);
 
         // adding on click listener to our update course button.
         updateReminderButton.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +67,7 @@ public class UpdateReminderActivity extends AppCompatActivity {
                 // System.out.println("reminderImportanceEdit.getText().toString()" + reminderImportanceEdit.getText().toString());
                 // System.out.println("Boolean.parseBoolean(reminderImportanceEdit.getText().toString())" + Boolean.parseBoolean(reminderImportanceEdit.getText().toString()));
 
-                dataBaseHelper.updateReminder(reminderID, reminderTitleEdit.getText().toString(), Integer.parseInt(reminderLevelEdit.getText().toString()), reminderScannedCodeEdit.getText().toString(), reminderImportanceEdit.isChecked());
+                dataBaseHelper.updateReminder(reminderID, reminderTitleEdit.getText().toString(), Integer.parseInt(reminderLevelEdit.getText().toString()), reminderScannedCodeEdit.getText().toString(), reminderImportanceSwitch.isChecked());
 
                 // displaying a toast message that our course has been updated.
                 Toast.makeText(UpdateReminderActivity.this, "Påminnelse uppdaterad...", Toast.LENGTH_LONG).show();

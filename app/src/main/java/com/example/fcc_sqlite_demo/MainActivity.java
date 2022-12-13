@@ -70,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         reminderImportant = getIntent().getBooleanExtra("Important_Scan_Code", false);
-        switchViewReminderIsImportant.isChecked();
+        // Toast.makeText(MainActivity.this, reminderImportant + "", Toast.LENGTH_LONG).show();
+        // switchViewReminderIsImportant.isChecked();
+        switchViewReminderIsImportant.setChecked(reminderImportant);
 
         showRemindersOnListView(dataBaseHelper);
 
