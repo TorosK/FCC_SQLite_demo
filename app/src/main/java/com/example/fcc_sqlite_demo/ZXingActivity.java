@@ -3,6 +3,7 @@ package com.example.fcc_sqlite_demo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -29,7 +30,16 @@ public class ZXingActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(ZXingActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ZXingActivity.this, result.getText(), Toast.LENGTH_LONG).show();
+
+                        // Save value (scanned code) to send to main activity
+                        // Switch back to main activity
+                        // on below line we are calling an intent.
+                        Intent intentZXing = new Intent(ZXingActivity.this, MainActivity.class);
+                        // below we are passing all our values.
+                        intentZXing.putExtra("scannedCode", result.getText());
+                        // starting our activity.
+                        startActivity(intentZXing);
                     }
                 });
             }

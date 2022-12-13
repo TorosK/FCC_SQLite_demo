@@ -23,6 +23,7 @@ import com.google.zxing.Result;
 
 public class MainActivity extends AppCompatActivity {
 
+    String reminderTitle;
     Button buttonAdd;
     Button buttonScan;
     EditText editTextTitle;
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
         listViewReminderList = findViewById(R.id.listView_reminder_List);
 
         dataBaseHelper = new DataBaseHelper(MainActivity.this);
+
+        reminderTitle = getIntent().getStringExtra("scannedCode");
+        editTextTitle.setText(reminderTitle);
 
         showRemindersOnListView(dataBaseHelper);
 
@@ -127,23 +131,6 @@ public class MainActivity extends AppCompatActivity {
                                 // Switch to New Update Fragment / Activity
                                 // Pre-populate three input fields
                                 // Save Button underneath
-
-                                // @Override
-                                // public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-                                // on below line we are setting data
-                                // to our views of recycler view item.
-
-                                // ReminderModel reminderModel = reminderModelArrayList.get(i);
-                                // holder.courseNameTV.setText(modal.getCourseName());
-                                // holder.courseDescTV.setText(modal.getCourseDescription());
-                                // holder.courseDurationTV.setText(modal.getCourseDuration());
-                                // holder.courseTracksTV.setText(modal.getCourseTracks());
-
-
-                                // below line is to add on click listener for our recycler view item.
-                                // holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                // @Override
-                                // public void onClick(View v) {
 
                                 ReminderModel clickedReminder = (ReminderModel) adapterView.getItemAtPosition(position);
 
