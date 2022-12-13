@@ -1,10 +1,12 @@
 <resources>
-    <string name="app_name">Påminnelser SQLite</string>
+    <string name="app_name">Påminnelser ICA</string>
     <string name="Title">Titel</string>
     <string name="Date">Datum</string>
+    <string name="Level">Våning</string>
     <string name="Important">Viktigt</string>
     <string name="buttonViewAll">Skanna</string>
     <string name="buttonAdd">Lägg Till</string>
     <string name="Done">Klar</string>
     <string name="Edit">Ändra</string>
+    <string name="Code">Kod</string>
 </resources>

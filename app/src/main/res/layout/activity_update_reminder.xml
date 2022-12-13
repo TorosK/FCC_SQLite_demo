@@ -44,17 +44,16 @@
         android:ems="10"
         android:hint="@string/Title"
         android:inputType="textPersonName"
-
         android:minHeight="48dp"
 
-        app:layout_constraintBottom_toTopOf="@+id/idEdtReminderDate"
+        app:layout_constraintBottom_toTopOf="@+id/idEdtReminderLevel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!--edit text to enter date-->
     <EditText
-        android:id="@+id/idEdtReminderDate"
+        android:id="@+id/idEdtReminderLevel"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -62,14 +61,33 @@
         android:layout_marginEnd="8dp"
 
         android:ems="10"
-        android:hint="@string/Date"
+        android:hint="@string/Level"
         android:inputType="number"
+        android:minHeight="48dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/idEdtReminderScannedCode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idEdtReminderTitle" />
+
+    <!--edit text to enter scannedCode-->
+    <EditText
+        android:id="@+id/idEdtReminderScannedCode"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+
+        android:ems="10"
+        android:hint="@string/Code"
+        android:inputType="textPersonName"
         android:minHeight="48dp"
 
         app:layout_constraintBottom_toTopOf="@+id/switch_reminder_Is_Important"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idEdtReminderTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/idEdtReminderLevel" />
 
     <!--edit switch to toggle importance-->
     <Switch
@@ -87,7 +105,7 @@
         app:layout_constraintBottom_toTopOf="@+id/idBtnUpdateReminder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idEdtReminderDate" />
+        app:layout_constraintTop_toBottomOf="@+id/idEdtReminderScannedCode" />
 
 
 

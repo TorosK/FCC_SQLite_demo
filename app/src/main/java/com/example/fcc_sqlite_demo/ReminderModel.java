@@ -3,14 +3,16 @@ package com.example.fcc_sqlite_demo;
 public class ReminderModel {
     private int id;
     private String title;
-    private int date;
+    private int level;
     private boolean isImportant;
+    private String scannedCode;
 
-    public ReminderModel(int id, String title, int date, boolean isImportant) {
+    public ReminderModel(int id, String title, int level, boolean isImportant, String scannedCode) {
         this.id = id;
         this.title = title;
-        this.date = date;
+        this.level = level;
         this.isImportant = isImportant;
+        this.scannedCode = scannedCode;
     }
 
     public ReminderModel() {
@@ -32,12 +34,12 @@ public class ReminderModel {
         this.title = title;
     }
 
-    public int getDate() {
-        return date;
+    public int getLevel() {
+        return level;
     }
 
-    public void setDate(int date) {
-        this.date = date;
+    public void setLevel(int date) {
+        this.level = level;
     }
 
     public boolean isImportant() {
@@ -46,6 +48,14 @@ public class ReminderModel {
 
     public void setImportant(boolean important) {
         isImportant = important;
+    }
+
+    public String getScannedCode() {
+        return scannedCode;
+    }
+
+    public void setScannedCode(String scannedCode) {
+        this.scannedCode = scannedCode;
     }
 
     /*
@@ -62,11 +72,11 @@ public class ReminderModel {
     @Override
     public String toString() {
         if (isImportant) {
-            return date + "  |  " + "VIKTIGT  |  " + title;
+            return "våning: " + level + "  |  " + "VIKTIGT  |  " + "titel: " + title + "  |  " + "kod: " + scannedCode;
         } else {
 
         }
-            return date + "  |  " + "                  |  " + title;
+            return "våning: " + level + "  |  " + "                 |  " + "titel: " + title + "  |  " + "kod: " + scannedCode;
     }
 
 }

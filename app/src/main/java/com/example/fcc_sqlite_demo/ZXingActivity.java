@@ -14,6 +14,11 @@ import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 
 public class ZXingActivity extends AppCompatActivity {
+
+    String reminderTitle;
+    int reminderLevel;
+    boolean reminderImportance;
+
     private CodeScanner mCodeScanner;
 
     @Override
@@ -32,12 +37,23 @@ public class ZXingActivity extends AppCompatActivity {
                     public void run() {
                         Toast.makeText(ZXingActivity.this, result.getText(), Toast.LENGTH_LONG).show();
 
+                        reminderTitle = getIntent().getStringExtra("Title_Scan_Code");
+                        reminderLevel = getIntent().getIntExtra("Level_Scan_Code", 0);
+                        reminderImportance = getIntent().getBooleanExtra("Important_Scan_Code", false);
+
+                        // Toast.makeText(ZXingActivity.this, "titel: " + reminderTitle + " | våning: " + reminderLevel + " | viktigt: " + reminderImportance, Toast.LENGTH_LONG).show();
+
                         // Save value (scanned code) to send to main activity
                         // Switch back to main activity
                         // on below line we are calling an intent.
                         Intent intentZXing = new Intent(ZXingActivity.this, MainActivity.class);
                         // below we are passing all our values.
                         intentZXing.putExtra("scannedCode", result.getText());
+
+                        intentZXing.putExtra("Title_Scan_Code", reminderTitle);
+                        intentZXing.putExtra("Level_Scan_Code", reminderLevel);
+                        intentZXing.putExtra("Important_Scan_Code", reminderImportance);
+
                         // starting our activity.
                         startActivity(intentZXing);
                     }

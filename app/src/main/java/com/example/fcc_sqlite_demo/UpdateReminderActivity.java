@@ -14,13 +14,15 @@ public class UpdateReminderActivity extends AppCompatActivity {
 
     // variables for our edit text, button, strings and dbhandler class.
     private EditText reminderTitleEdit;
-    private EditText reminderDateEdit;
+    private EditText reminderLevelEdit;
+    private EditText reminderScannedCodeEdit;
     private Switch reminderImportanceEdit;
     private Button updateReminderButton;
     private DataBaseHelper dataBaseHelper;
     int reminderID;
     String reminderTitle;
-    int reminderDate;
+    int reminderLevel;
+    String reminderScannedCode;
     boolean reminderImportance;
 
     @Override
@@ -30,7 +32,8 @@ public class UpdateReminderActivity extends AppCompatActivity {
 
         // initializing all our variables.
         reminderTitleEdit = findViewById(R.id.idEdtReminderTitle);
-        reminderDateEdit = findViewById(R.id.idEdtReminderDate);
+        reminderLevelEdit = findViewById(R.id.idEdtReminderLevel);
+        reminderScannedCodeEdit = findViewById(R.id.idEdtReminderScannedCode);
         reminderImportanceEdit = findViewById(R.id.switch_reminder_Is_Important);
         updateReminderButton = findViewById(R.id.idBtnUpdateReminder);
 
@@ -41,13 +44,15 @@ public class UpdateReminderActivity extends AppCompatActivity {
         // we passed in our adapter class.
         reminderID = getIntent().getIntExtra("ID", 0);
         reminderTitle = getIntent().getStringExtra("Title");
-        reminderDate = getIntent().getIntExtra("Date", 0);
+        reminderLevel = getIntent().getIntExtra("Level", 0);
+        reminderScannedCode = getIntent().getStringExtra("ScannedCode");
         reminderImportance = getIntent().getBooleanExtra("Important", false);
 
         // setting data to edit text
         // of our update activity.
         reminderTitleEdit.setText(reminderTitle);
-        reminderDateEdit.setText(Integer.toString(reminderDate));
+        reminderLevelEdit.setText(Integer.toString(reminderLevel));
+        reminderScannedCodeEdit.setText(reminderScannedCode);
         reminderImportanceEdit.setChecked(reminderImportance);
 
         // adding on click listener to our update course button.
@@ -62,7 +67,7 @@ public class UpdateReminderActivity extends AppCompatActivity {
                 // System.out.println("reminderImportanceEdit.getText().toString()" + reminderImportanceEdit.getText().toString());
                 // System.out.println("Boolean.parseBoolean(reminderImportanceEdit.getText().toString())" + Boolean.parseBoolean(reminderImportanceEdit.getText().toString()));
 
-                dataBaseHelper.updateReminder(reminderID, reminderTitleEdit.getText().toString(), Integer.parseInt(reminderDateEdit.getText().toString()), reminderImportanceEdit.isChecked());
+                dataBaseHelper.updateReminder(reminderID, reminderTitleEdit.getText().toString(), Integer.parseInt(reminderLevelEdit.getText().toString()), reminderScannedCodeEdit.getText().toString(), reminderImportanceEdit.isChecked());
 
                 // displaying a toast message that our course has been updated.
                 Toast.makeText(UpdateReminderActivity.this, "Påminnelse uppdaterad...", Toast.LENGTH_LONG).show();

@@ -20,13 +20,13 @@
 
         android:minHeight="48dp"
 
-        app:layout_constraintBottom_toTopOf="@+id/editText_reminderDate"
+        app:layout_constraintBottom_toTopOf="@+id/editText_reminderLevel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_reminderDate"
+        android:id="@+id/editText_reminderLevel"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,14 +34,32 @@
         android:layout_marginEnd="8dp"
 
         android:ems="10"
-        android:hint="@string/Date"
+        android:hint="@string/Level"
         android:inputType="number"
+        android:minHeight="48dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/editText_reminderScannedCode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_reminderTitle" />
+
+    <EditText
+        android:id="@+id/editText_reminderScannedCode"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+
+        android:ems="10"
+        android:hint="@string/Code"
+        android:inputType="textPersonName"
         android:minHeight="48dp"
 
         app:layout_constraintBottom_toTopOf="@+id/switch_reminder_Is_Important"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_reminderTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_reminderLevel" />
 
     <Switch
         android:id="@+id/switch_reminder_Is_Important"
@@ -58,7 +76,7 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonScan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_reminderDate" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_reminderScannedCode" />
 
     <Button
         android:id="@+id/buttonScan"

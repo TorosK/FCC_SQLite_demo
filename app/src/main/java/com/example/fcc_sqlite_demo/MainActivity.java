@@ -24,13 +24,23 @@ import com.google.zxing.Result;
 public class MainActivity extends AppCompatActivity {
 
     String reminderTitle;
+    int reminderLevel;
+    String reminderScannedCode;
+    boolean reminderImportant;
+
     Button buttonAdd;
     Button buttonScan;
+
     EditText editTextTitle;
-    EditText editTextDate;
+    EditText editTextLevel;
+    EditText editTextScannedCode;
+
     Switch switchViewReminderIsImportant;
+
     ListView listViewReminderList;
+
     ArrayAdapter reminderArrayAdapter;
+
     DataBaseHelper dataBaseHelper;
 
     @Override
@@ -41,14 +51,26 @@ public class MainActivity extends AppCompatActivity {
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonScan = findViewById(R.id.buttonScan);
         editTextTitle = findViewById(R.id.editText_reminderTitle);
-        editTextDate = findViewById(R.id.editText_reminderDate);
+        editTextLevel = findViewById(R.id.editText_reminderLevel);
+        editTextScannedCode = findViewById(R.id.editText_reminderScannedCode);
         switchViewReminderIsImportant = findViewById(R.id.switch_reminder_Is_Important);
         listViewReminderList = findViewById(R.id.listView_reminder_List);
 
         dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
-        reminderTitle = getIntent().getStringExtra("scannedCode");
+        reminderScannedCode = getIntent().getStringExtra("scannedCode");
+        editTextScannedCode.setText(reminderScannedCode);
+
+        reminderTitle = getIntent().getStringExtra("Title_Scan_Code");
         editTextTitle.setText(reminderTitle);
+
+        reminderLevel = getIntent().getIntExtra("Level_Scan_Code", -999);
+        if (reminderLevel != -999) {
+            editTextLevel.setText(String.valueOf(reminderLevel));
+        }
+
+        reminderImportant = getIntent().getBooleanExtra("Important_Scan_Code", false);
+        switchViewReminderIsImportant.isChecked();
 
         showRemindersOnListView(dataBaseHelper);
 
@@ -58,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
                 ReminderModel reminderModel;
                 try {
-                    reminderModel = new ReminderModel(-1, editTextTitle.getText().toString(), Integer.parseInt(editTextDate.getText().toString()), switchViewReminderIsImportant.isChecked());
+                    reminderModel = new ReminderModel(-1, editTextTitle.getText().toString(), Integer.parseInt(editTextLevel.getText().toString()), switchViewReminderIsImportant.isChecked(), editTextScannedCode.getText().toString());
                     Toast.makeText(MainActivity.this, "Ny påminnelse: " + reminderModel.toString(), Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
-                    reminderModel = new ReminderModel(-1, "error", 0, false);
+                    reminderModel = new ReminderModel(-1, "error", 0, false, "error");
                     Toast.makeText(MainActivity.this, "Error: Wrong input", Toast.LENGTH_LONG).show();
                 }
 
@@ -71,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
                 // Toast.makeText(MainActivity.this, "success: " + success, Toast.LENGTH_LONG).show();
                 showRemindersOnListView(dataBaseHelper);
 
+                editTextTitle.getText().clear();
+                editTextLevel.getText().clear();
+                editTextScannedCode.getText().clear();
+                switchViewReminderIsImportant.setChecked(false);
             }
         });
 
@@ -98,6 +124,25 @@ public class MainActivity extends AppCompatActivity {
             // Switch to ZXing activity
             // on below line we are calling an intent.
             Intent intent = new Intent(MainActivity.this, ZXingActivity.class);
+
+            // below we are passing all our values.
+            intent.putExtra("Title_Scan_Code", editTextTitle.getText().toString());
+            reminderTitle = editTextTitle.getText().toString();
+
+            // Toast.makeText(MainActivity.this, "titel: " + reminderTitle, Toast.LENGTH_LONG).show();
+
+            if (editTextLevel.getText().toString().equals("") == false) {
+                intent.putExtra("Level_Scan_Code", Integer.parseInt(editTextLevel.getText().toString()));
+                reminderLevel = Integer.parseInt(editTextLevel.getText().toString());
+            }
+
+            // Toast.makeText(MainActivity.this, "våning: " + reminderLevel, Toast.LENGTH_LONG).show();
+
+            intent.putExtra("Important_Scan_Code", switchViewReminderIsImportant.isChecked());
+            reminderImportant = switchViewReminderIsImportant.isChecked();
+
+            // Toast.makeText(MainActivity.this, "viktigt: " + reminderImportant, Toast.LENGTH_LONG).show();
+
             // starting our activity.
             startActivity(intent);
         });
@@ -139,8 +184,9 @@ public class MainActivity extends AppCompatActivity {
                                 // below we are passing all our values.
                                 intent.putExtra("ID", clickedReminder.getId());
                                 intent.putExtra("Title", clickedReminder.getTitle());
-                                intent.putExtra("Date", clickedReminder.getDate());
+                                intent.putExtra("Level", clickedReminder.getLevel());
                                 intent.putExtra("Important", clickedReminder.isImportant());
+                                intent.putExtra("ScannedCode", clickedReminder.getScannedCode());
                                 // starting our activity.
                                 startActivity(intent);
                                 // }

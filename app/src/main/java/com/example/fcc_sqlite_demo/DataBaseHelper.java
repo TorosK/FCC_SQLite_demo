@@ -16,8 +16,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String REMINDER_TABLE = "REMINDER_TABLE";
     public static final String REMINDER_COLUMN_ID = "ID";
     public static final String REMINDER_COLUMN_TITLE = "TITLE";
-    public static final String REMINDER_COLUMN_DATE = "DATE";
+    public static final String REMINDER_COLUMN_LEVEL = "LEVEL";
     public static final String REMINDER_COLUMN_IS_IMPORTANT = "IS_IMPORTANT";
+    public static final String REMINDER_COLUMN_SCANNED_CODE = "SCANNED_CODE";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "reminder.db", null, 1);
@@ -25,7 +26,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String createTableStatement = "CREATE TABLE " + REMINDER_TABLE + " (" + REMINDER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + REMINDER_COLUMN_TITLE + " TEXT, " + REMINDER_COLUMN_DATE + " INT, " + REMINDER_COLUMN_IS_IMPORTANT + " BOOL)";
+        String createTableStatement = "CREATE TABLE " + REMINDER_TABLE + " (" + REMINDER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + REMINDER_COLUMN_TITLE + " TEXT, " + REMINDER_COLUMN_LEVEL + " INT, " + REMINDER_COLUMN_IS_IMPORTANT + " BOOL, " + REMINDER_COLUMN_SCANNED_CODE + " TEXT)";
 
         sqLiteDatabase.execSQL(createTableStatement);
     }
@@ -43,8 +44,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // contentValues.put(COLUMN_CUSTOMER_ID, customerModel.getId());
 
         contentValues.put(REMINDER_COLUMN_TITLE, reminderModel.getTitle());
-        contentValues.put(REMINDER_COLUMN_DATE, reminderModel.getDate());
+        contentValues.put(REMINDER_COLUMN_LEVEL, reminderModel.getLevel());
         contentValues.put(REMINDER_COLUMN_IS_IMPORTANT, reminderModel.isImportant());
+        contentValues.put(REMINDER_COLUMN_SCANNED_CODE, reminderModel.getScannedCode());
         long insert = sqLiteDatabase.insert(REMINDER_TABLE, null, contentValues);
         System.out.println(insert);
         if(insert == -1) {
@@ -63,9 +65,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             do {
                 int reminder_ID = cursor.getInt(0);
                 String reminder_title = cursor.getString(1);
-                int reminder_date = cursor.getInt(2);
+                int reminder_level = cursor.getInt(2);
                 boolean reminder_is_important = cursor.getInt(3) == 1 ? true: false;
-                ReminderModel reminderModel = new ReminderModel(reminder_ID, reminder_title, reminder_date, reminder_is_important);
+                String reminder_scanned_code = cursor.getString(4);
+                ReminderModel reminderModel = new ReminderModel(reminder_ID, reminder_title, reminder_level, reminder_is_important, reminder_scanned_code);
                 returnList.add(reminderModel);
             } while (cursor.moveToNext());
         } else {
@@ -89,7 +92,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     // Update method
-    public void updateReminder(int id, String title, int date, boolean important) {
+    public void updateReminder(int id, String title, int level, String scanned_code, boolean important) {
 
         // calling a method to get writable database.
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -99,7 +102,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // along with its key and value pair.
         values.put(REMINDER_COLUMN_ID, id);
         values.put(REMINDER_COLUMN_TITLE, title);
-        values.put(REMINDER_COLUMN_DATE, date);
+        values.put(REMINDER_COLUMN_LEVEL, level);
+        values.put(REMINDER_COLUMN_SCANNED_CODE, scanned_code);
         values.put(REMINDER_COLUMN_IS_IMPORTANT, important);
 
         // on below line we are calling a update method to update our database and passing our values.
