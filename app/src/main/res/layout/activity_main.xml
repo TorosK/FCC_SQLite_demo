@@ -129,6 +129,7 @@
         android:minHeight="48dp"
         android:text="@string/Important"
         android:textAllCaps="false"
+        android:typeface="normal"
 
         app:layout_constraintBottom_toTopOf="@+id/buttonScan"
         app:layout_constraintEnd_toEndOf="parent"
