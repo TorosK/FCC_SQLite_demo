@@ -3,6 +3,7 @@ package com.example.fcc_sqlite_demo;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,31 +15,35 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    String reminderTitle;
-    int reminderLevel;
-    String reminderScannedCode;
-    boolean reminderImportant;
+    private String reminderTitle;
+    private String reminderDate;
+    private String reminderTime;
+    private int reminderLevel;
+    private String reminderScannedCode;
+    private boolean reminderImportant;
 
-    Button buttonAdd;
-    Button buttonScan;
+    private Button buttonAdd;
+    private Button buttonScan;
 
-    EditText editTextTitle;
+    private EditText editTextTitle;
     private EditText editTextDate;
-    EditText editTextLevel;
-    EditText editTextScannedCode;
+    private EditText editTextTime;
+    private EditText editTextLevel;
+    private EditText editTextScannedCode;
 
-    Switch switchViewReminderIsImportant;
+    private Switch switchViewReminderIsImportant;
 
-    ListView listViewReminderList;
+    private ListView listViewReminderList;
 
-    ArrayAdapter reminderArrayAdapter;
+    private ArrayAdapter reminderArrayAdapter;
 
-    DataBaseHelper dataBaseHelper;
+    private DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         buttonScan = findViewById(R.id.buttonScan);
         editTextTitle = findViewById(R.id.editText_reminderTitle);
         editTextDate = findViewById(R.id.editText_reminderDate);
+        editTextTime = findViewById(R.id.editText_reminderTime);
         editTextLevel = findViewById(R.id.editText_reminderLevel);
         editTextScannedCode = findViewById(R.id.editText_reminderScannedCode);
         switchViewReminderIsImportant = findViewById(R.id.switch_reminder_Is_Important);
@@ -62,6 +68,12 @@ public class MainActivity extends AppCompatActivity {
 
         reminderTitle = getIntent().getStringExtra("Title_Scan_Code");
         editTextTitle.setText(reminderTitle);
+
+        reminderDate = getIntent().getStringExtra("Date_Scan_Code");
+        editTextDate.setText(reminderDate);
+
+        reminderTime = getIntent().getStringExtra("Time_Scan_Code");
+        editTextTime.setText(reminderTime);
 
         reminderLevel = getIntent().getIntExtra("Level_Scan_Code", -999);
         if (reminderLevel != -999) {
@@ -112,17 +124,76 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        editTextTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // on below line we are getting the
+                // instance of our calendar.
+                final Calendar c = Calendar.getInstance();
+
+                // on below line we are getting our hour, minute.
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+
+                // on below line we are initializing our Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                // on below line we are setting selected time
+                                // in our text view.
+                                editTextTime.setText(hourOfDay + ":" + minute);
+                            }
+                        }, hour, minute, false);
+                // at last we are calling show to
+                // display our time picker dialog.
+                timePickerDialog.show();
+            }
+        });
+
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 ReminderModel reminderModel;
+
+                System.out.println(editTextLevel);
+                System.out.println(editTextLevel.getText());
+                System.out.println(editTextLevel.getText().toString());
+                // System.out.println(Integer.parseInt(editTextLevel.getText().toString()));
+                // System.out.println(Integer.parseInt(editTextLevel.getText()));
+
+                System.out.println(editTextLevel.getText().toString().equals(""));
+
+                // To fix NumberException Error
+                // java.lang.NumberFormatException: For input string: ""
+                // editTextLevel.getText().toString() was "" when no input
+                if (editTextLevel.getText().toString().equals("")) {
+                    editTextLevel.setText("0");
+                }
+
                 try {
-                    reminderModel = new ReminderModel(-1, editTextTitle.getText().toString(), Integer.parseInt(editTextLevel.getText().toString()), switchViewReminderIsImportant.isChecked(), editTextScannedCode.getText().toString());
-                    Toast.makeText(MainActivity.this, "Ny påminnelse: " + reminderModel.toString(), Toast.LENGTH_LONG).show();
+                    reminderModel = new ReminderModel(-1,
+                            editTextTitle.getText().toString(),
+                            editTextDate.getText().toString(),
+                            editTextTime.getText().toString(),
+                            Integer.parseInt(editTextLevel.getText().toString()),
+                            editTextScannedCode.getText().toString(),
+                            switchViewReminderIsImportant.isChecked());
+                    System.out.println(reminderModel);
+                    Toast.makeText(MainActivity.this, "Ny påminnelse: " + reminderModel, Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
-                    reminderModel = new ReminderModel(-1, "error", 0, false, "error");
-                    Toast.makeText(MainActivity.this, "Error: Wrong input", Toast.LENGTH_LONG).show();
+                    System.out.println(e);
+                    reminderModel = new ReminderModel(-1,
+                            "",
+                            "",
+                            "",
+                            0,
+                            "",
+                            false);
+                    System.out.println(reminderModel);
+                    Toast.makeText(MainActivity.this, "Fel. Ingen input.", Toast.LENGTH_LONG).show();
                 }
 
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
@@ -132,6 +203,8 @@ public class MainActivity extends AppCompatActivity {
                 showRemindersOnListView(dataBaseHelper);
 
                 editTextTitle.getText().clear();
+                editTextDate.getText().clear();
+                editTextTime.getText().clear();
                 editTextLevel.getText().clear();
                 editTextScannedCode.getText().clear();
                 switchViewReminderIsImportant.setChecked(false);
@@ -166,6 +239,12 @@ public class MainActivity extends AppCompatActivity {
             // below we are passing all our values.
             intent.putExtra("Title_Scan_Code", editTextTitle.getText().toString());
             reminderTitle = editTextTitle.getText().toString();
+
+            intent.putExtra("Date_Scan_Code", editTextDate.getText().toString());
+            reminderDate = editTextDate.getText().toString();
+
+            intent.putExtra("Time_Scan_Code", editTextTime.getText().toString());
+            reminderTime = editTextTime.getText().toString();
 
             // Toast.makeText(MainActivity.this, "titel: " + reminderTitle, Toast.LENGTH_LONG).show();
 
@@ -222,9 +301,11 @@ public class MainActivity extends AppCompatActivity {
                                 // below we are passing all our values.
                                 intent.putExtra("ID", clickedReminder.getId());
                                 intent.putExtra("Title", clickedReminder.getTitle());
+                                intent.putExtra("Date", clickedReminder.getDate());
+                                intent.putExtra("Time", clickedReminder.getTime());
                                 intent.putExtra("Level", clickedReminder.getLevel());
-                                intent.putExtra("Important", clickedReminder.isImportant());
                                 intent.putExtra("ScannedCode", clickedReminder.getScannedCode());
+                                intent.putExtra("Important", clickedReminder.isImportant());
                                 // starting our activity.
                                 startActivity(intent);
                                 // }

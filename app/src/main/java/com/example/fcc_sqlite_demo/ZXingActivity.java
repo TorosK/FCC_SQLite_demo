@@ -15,9 +15,11 @@ import com.google.zxing.Result;
 
 public class ZXingActivity extends AppCompatActivity {
 
-    String reminderTitle;
-    int reminderLevel;
-    boolean reminderImportance;
+    private String reminderTitle;
+    private String reminderDate;
+    private String reminderTime;
+    private int reminderLevel;
+    private boolean reminderImportance;
 
     private CodeScanner mCodeScanner;
 
@@ -38,6 +40,8 @@ public class ZXingActivity extends AppCompatActivity {
                         Toast.makeText(ZXingActivity.this, result.getText(), Toast.LENGTH_LONG).show();
 
                         reminderTitle = getIntent().getStringExtra("Title_Scan_Code");
+                        reminderDate = getIntent().getStringExtra("Date_Scan_Code");
+                        reminderTime = getIntent().getStringExtra("Time_Scan_Code");
                         reminderLevel = getIntent().getIntExtra("Level_Scan_Code", -999);
                         reminderImportance = getIntent().getBooleanExtra("Important_Scan_Code", false);
 
@@ -51,6 +55,8 @@ public class ZXingActivity extends AppCompatActivity {
                         intentZXing.putExtra("scannedCode", result.getText());
 
                         intentZXing.putExtra("Title_Scan_Code", reminderTitle);
+                        intentZXing.putExtra("Date_Scan_Code", reminderDate);
+                        intentZXing.putExtra("Time_Scan_Code", reminderTime);
                         intentZXing.putExtra("Level_Scan_Code", reminderLevel);
                         intentZXing.putExtra("Important_Scan_Code", reminderImportance);
 

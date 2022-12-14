@@ -2,6 +2,7 @@
     <string name="app_name">Påminnelser ICA</string>
     <string name="Title">Titel</string>
     <string name="Date">Datum</string>
+    <string name="Time">Tid</string>
     <string name="Level">Våning</string>
     <string name="Important">Viktigt</string>
     <string name="buttonViewAll">Skanna</string>

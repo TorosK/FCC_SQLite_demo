@@ -16,9 +16,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String REMINDER_TABLE = "REMINDER_TABLE";
     public static final String REMINDER_COLUMN_ID = "ID";
     public static final String REMINDER_COLUMN_TITLE = "TITLE";
+    public static final String REMINDER_COLUMN_DATE = "DATE";
+    public static final String REMINDER_COLUMN_TIME = "TIME";
     public static final String REMINDER_COLUMN_LEVEL = "LEVEL";
-    public static final String REMINDER_COLUMN_IS_IMPORTANT = "IS_IMPORTANT";
     public static final String REMINDER_COLUMN_SCANNED_CODE = "SCANNED_CODE";
+    public static final String REMINDER_COLUMN_IS_IMPORTANT = "IS_IMPORTANT";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "reminder.db", null, 1);
@@ -26,7 +28,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String createTableStatement = "CREATE TABLE " + REMINDER_TABLE + " (" + REMINDER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + REMINDER_COLUMN_TITLE + " TEXT, " + REMINDER_COLUMN_LEVEL + " INT, " + REMINDER_COLUMN_IS_IMPORTANT + " BOOL, " + REMINDER_COLUMN_SCANNED_CODE + " TEXT)";
+        String createTableStatement = "CREATE TABLE " + REMINDER_TABLE + " (" +
+                REMINDER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                REMINDER_COLUMN_TITLE + " TEXT, " +
+                REMINDER_COLUMN_DATE + " TEXT, " +
+                REMINDER_COLUMN_TIME + " TEXT, " +
+                REMINDER_COLUMN_LEVEL + " INT, " +
+                REMINDER_COLUMN_SCANNED_CODE + " TEXT, " +
+                REMINDER_COLUMN_IS_IMPORTANT + " BOOL)";
 
         sqLiteDatabase.execSQL(createTableStatement);
     }
@@ -44,11 +53,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // contentValues.put(COLUMN_CUSTOMER_ID, customerModel.getId());
 
         contentValues.put(REMINDER_COLUMN_TITLE, reminderModel.getTitle());
+        contentValues.put(REMINDER_COLUMN_DATE, reminderModel.getDate());
+        contentValues.put(REMINDER_COLUMN_TIME, reminderModel.getTime());
         contentValues.put(REMINDER_COLUMN_LEVEL, reminderModel.getLevel());
-        contentValues.put(REMINDER_COLUMN_IS_IMPORTANT, reminderModel.isImportant());
         contentValues.put(REMINDER_COLUMN_SCANNED_CODE, reminderModel.getScannedCode());
+        contentValues.put(REMINDER_COLUMN_IS_IMPORTANT, reminderModel.isImportant());
+
         long insert = sqLiteDatabase.insert(REMINDER_TABLE, null, contentValues);
-        System.out.println(insert);
+        System.out.println("insert: " + insert);
         if(insert == -1) {
             return false;
         } else {
@@ -65,10 +77,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             do {
                 int reminder_ID = cursor.getInt(0);
                 String reminder_title = cursor.getString(1);
-                int reminder_level = cursor.getInt(2);
-                boolean reminder_is_important = cursor.getInt(3) == 1 ? true: false;
-                String reminder_scanned_code = cursor.getString(4);
-                ReminderModel reminderModel = new ReminderModel(reminder_ID, reminder_title, reminder_level, reminder_is_important, reminder_scanned_code);
+                String reminder_date = cursor.getString(2);
+                String reminder_time = cursor.getString(3);
+                int reminder_level = cursor.getInt(4);
+                String reminder_scanned_code = cursor.getString(5);
+                boolean reminder_is_important = cursor.getInt(6) == 1 ? true: false;
+                ReminderModel reminderModel = new ReminderModel(reminder_ID, reminder_title, reminder_date, reminder_time, reminder_level, reminder_scanned_code, reminder_is_important);
                 returnList.add(reminderModel);
             } while (cursor.moveToNext());
         } else {
@@ -92,7 +106,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     // Update method
-    public void updateReminder(int id, String title, int level, String scanned_code, boolean important) {
+    public void updateReminder(int id, String title, String date, String time, int level, String scanned_code, boolean important) {
 
         // calling a method to get writable database.
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -102,6 +116,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // along with its key and value pair.
         values.put(REMINDER_COLUMN_ID, id);
         values.put(REMINDER_COLUMN_TITLE, title);
+        values.put(REMINDER_COLUMN_DATE, date);
+        values.put(REMINDER_COLUMN_TIME, time);
         values.put(REMINDER_COLUMN_LEVEL, level);
         values.put(REMINDER_COLUMN_SCANNED_CODE, scanned_code);
         values.put(REMINDER_COLUMN_IS_IMPORTANT, important);
