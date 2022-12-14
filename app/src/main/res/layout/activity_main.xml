@@ -136,29 +136,32 @@
         app:layout_constraintTop_toBottomOf="@+id/editText_reminderScannedCode" />
 
     <Button
+        app:backgroundTint="@null"
         android:id="@+id/buttonScan"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:backgroundTint="#E13205"
         android:text="@string/buttonViewAll"
 
         android:textAllCaps="false"
 
-        app:layout_constraintBottom_toTopOf="@+id/listView_reminder_List"
+        android:background="@drawable/button_rounded_corner"
 
+        app:layout_constraintBottom_toTopOf="@+id/listView_reminder_List"
         app:layout_constraintEnd_toStartOf="@+id/buttonAdd"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_reminder_Is_Important" />
 
     <Button
+        app:backgroundTint="@null"
         android:id="@+id/buttonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:backgroundTint="#E13205"
         android:text="@string/buttonAdd"
+
+        android:background="@drawable/button_rounded_corner"
 
         android:textAllCaps="false"
 
