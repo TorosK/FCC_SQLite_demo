@@ -9,7 +9,6 @@ public class ReminderModel {
     private String scannedCode;
     private boolean isImportant;
 
-
     public ReminderModel(int id, String title, String date, String time, int level, String scannedCode, boolean isImportant) {
         this.id = id;
         this.title = title;
@@ -18,7 +17,6 @@ public class ReminderModel {
         this.level = level;
         this.scannedCode = scannedCode;
         this.isImportant = isImportant;
-
     }
 
     //public ReminderModel() {}
@@ -105,6 +103,19 @@ public class ReminderModel {
     @Override
     public String toString() {
         if (isImportant) {
+
+            /* ERROR. Cannot return SpannableString. Must be String only.
+            String boldText = "                    OBS! VIKTIGT!";
+            String normalText = "titel:         " + title + "\n" +
+                    "datum:     " + date + "\n" +
+                    "tid:           " + time + "\n" +
+                    "våning:    " + level + "\n" +
+                    "kod:       " + scannedCode + "\n";
+            SpannableString str = new SpannableString(boldText + normalText);
+            str.setSpan(new StyleSpan(Typeface.BOLD), 0, boldText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return str;
+             */
+
             return "                    OBS! VIKTIGT!" + "\n" +
                     "titel:         " + title + "\n" +
                     "datum:     " + date + "\n" +

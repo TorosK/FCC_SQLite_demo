@@ -39,17 +39,17 @@
     <EditText
         android:id="@+id/editText_reminderDate"
 
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
 
+        android:clickable="false"
+        android:cursorVisible="false"
         android:ems="10"
+        android:focusable="false"
+
+        android:focusableInTouchMode="false"
         android:hint="@string/Date"
         android:inputType="date"
         android:minHeight="48dp"
@@ -62,17 +62,17 @@
     <EditText
         android:id="@+id/editText_reminderTime"
 
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
 
+        android:clickable="false"
+        android:cursorVisible="false"
         android:ems="10"
+        android:focusable="false"
+
+        android:focusableInTouchMode="false"
         android:hint="@string/Time"
         android:inputType="date"
         android:minHeight="48dp"
@@ -137,17 +137,17 @@
         app:layout_constraintTop_toBottomOf="@+id/editText_reminderScannedCode" />
 
     <Button
-        app:backgroundTint="@null"
         android:id="@+id/buttonScan"
-
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
+        android:background="@drawable/button_rounded_corner"
 
         android:text="@string/buttonViewAll"
 
         android:textAllCaps="false"
 
-        android:background="@drawable/button_rounded_corner"
+        app:backgroundTint="@null"
 
         app:layout_constraintBottom_toTopOf="@+id/listView_reminder_List"
         app:layout_constraintEnd_toStartOf="@+id/buttonAdd"
@@ -155,16 +155,16 @@
         app:layout_constraintTop_toBottomOf="@+id/switch_reminder_Is_Important" />
 
     <Button
-        app:backgroundTint="@null"
         android:id="@+id/buttonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_rounded_corner"
 
         android:text="@string/buttonAdd"
 
-        android:background="@drawable/button_rounded_corner"
-
         android:textAllCaps="false"
+
+        app:backgroundTint="@null"
 
         app:layout_constraintBottom_toTopOf="@+id/listView_reminder_List"
         app:layout_constraintEnd_toEndOf="parent"

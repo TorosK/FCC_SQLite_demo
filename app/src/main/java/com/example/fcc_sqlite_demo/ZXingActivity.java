@@ -80,6 +80,7 @@ public class ZXingActivity extends AppCompatActivity {
         super.onResume();
         mCodeScanner.startPreview();
     }
+
     @Override
     protected void onPause() {
         mCodeScanner.releaseResources();

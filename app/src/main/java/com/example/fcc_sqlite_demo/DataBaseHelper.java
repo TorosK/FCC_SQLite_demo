@@ -61,7 +61,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         long insert = sqLiteDatabase.insert(REMINDER_TABLE, null, contentValues);
         System.out.println("insert: " + insert);
-        if(insert == -1) {
+        if (insert == -1) {
             return false;
         } else {
             return true;
@@ -72,8 +72,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         List<ReminderModel> returnList = new ArrayList<>();
         String queryString = "SELECT * FROM " + REMINDER_TABLE;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery(queryString,null);
-        if(cursor.moveToFirst()) {
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+        if (cursor.moveToFirst()) {
             do {
                 int reminder_ID = cursor.getInt(0);
                 String reminder_title = cursor.getString(1);
@@ -81,7 +81,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String reminder_time = cursor.getString(3);
                 int reminder_level = cursor.getInt(4);
                 String reminder_scanned_code = cursor.getString(5);
-                boolean reminder_is_important = cursor.getInt(6) == 1 ? true: false;
+                boolean reminder_is_important = cursor.getInt(6) == 1 ? true : false;
                 ReminderModel reminderModel = new ReminderModel(reminder_ID, reminder_title, reminder_date, reminder_time, reminder_level, reminder_scanned_code, reminder_is_important);
                 returnList.add(reminderModel);
             } while (cursor.moveToNext());

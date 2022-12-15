@@ -1,6 +1,7 @@
 package com.example.fcc_sqlite_demo;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -112,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
                                                   int monthOfYear, int dayOfMonth) {
                                 // on below line we are setting date to our edit text.
                                 editTextDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
                             }
                         },
                         // on below line we are passing year,
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                                 // in our text view.
                                 editTextTime.setText(hourOfDay + ":" + minute);
                             }
-                        }, hour, minute, false);
+                        }, hour, minute, true);
                 // at last we are calling show to
                 // display our time picker dialog.
                 timePickerDialog.show();
@@ -273,7 +274,6 @@ public class MainActivity extends AppCompatActivity {
                 dataBaseHelper.deleteOne(clickedReminder);
                 showRemindersOnListView(dataBaseHelper);
                 Toast.makeText(MainActivity.this, "DELETED " + clickedReminder.toString(), Toast.LENGTH_SHORT).show();
-
             }
         });
         */
